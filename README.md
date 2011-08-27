@@ -4,6 +4,12 @@
 
 A Sinatra application that will generate QRCodes for a BBC url with a BBC logo embedded in it.
 
+## Requirements
+
+This application requires [ImageMagick](http://www.imagemagick.org/) to be installed. I use [homebrew](http://github.com/mxcl/homebrew) which made the process very easy. Other dependencies can be installed running:
+
+  bundle install
+
 ## Resources
 
 * [More fun with QRCodes and the BBC logo](http://whomwah.com/2008/03/12/more-fun-with-qr-codes-and-the-bbc-logo/)
