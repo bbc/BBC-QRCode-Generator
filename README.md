@@ -2,7 +2,7 @@
 
 ## Overview
 
-A Sinatra application that will generate QRCodes for a BBC url with a BBC logo embedded in it.
+A Sinatra application that will generate QRCodes for a BBC url with a BBC logo embedded in it. This QRCodes are PNG's and can be saved.
 
 ## Requirements
 
