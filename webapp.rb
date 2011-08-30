@@ -7,7 +7,7 @@ class BBCQRCode < Sinatra::Base
   set :public, 'public'
   set :root, File.dirname(__FILE__)
 
-  #set :environment, :production
+  set :environment, :production
 
   # expects bitly credentials to live in ~/.bitlyrc
   BITLY = YAML::load(File.read(File.expand_path('~')+'/.bitlyrc'))
@@ -21,6 +21,7 @@ class BBCQRCode < Sinatra::Base
     ['b', 20, 21], ['w', 27, 17, 28, 17], 
     ['w', 26, 18, 26, 20], ['w', 27, 21, 28, 21]
   ]
+  DEFAULT_SIZE=400
 
   helpers do 
     def build_bbc_logo
@@ -61,7 +62,7 @@ class BBCQRCode < Sinatra::Base
     end
 
     def to_qrcode_blob(code,size)
-      size = (size > 800 || size < 39) ? size = 400 : size
+      size = (size > 800 || size < 39) ? size = DEFAULT_SIZE : size
       img = Magick::Image.new(39,39)
       build_qrcode('http://bbc.in/'+code).draw(img)
       build_bbc_logo.draw(img)
@@ -73,10 +74,6 @@ class BBCQRCode < Sinatra::Base
 
     def to_qrcode_base64(blob)
       "data:image/png;base64,#{Base64.encode64(blob)}"
-    end
-
-    def to_qrcode(code)
-      "/qrcode/400/#{code}.png"
     end
   end
 
@@ -91,7 +88,7 @@ class BBCQRCode < Sinatra::Base
   post '/generate' do
     destination = '/'
     if is_bbc?(params[:url])
-      destination = "/qrcodes/#{Base64.urlsafe_encode64(params[:url])}"
+      destination = "/qrcodes/#{DEFAULT_SIZE}/#{Base64.urlsafe_encode64(params[:url])}"
     end
 
     redirect to destination
