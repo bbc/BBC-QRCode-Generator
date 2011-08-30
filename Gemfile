@@ -1,6 +1,7 @@
 source "http://rubygems.org"
-gem 'rack'
 gem 'sinatra'
+gem 'rack'
+gem 'rack-cache', :require => "rack/cache"
 gem 'rqrcode'
 gem 'rmagick'
 gem 'bitly'

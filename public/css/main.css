@@ -1,0 +1,52 @@
+body {
+  font:70% 'Helvetica'; 
+  padding:20px;
+}
+
+h1 {
+  font-size:2.8em;
+  margin-bottom:0.4em;
+}
+
+p {
+  font-size:1.4em;
+  margin-bottom:0.4em;
+}
+
+ul {
+  margin-bottom:1.5em;
+}
+
+li {
+  display:block;
+  font-size:1.4em;
+  margin-bottom:0.3em;
+}
+
+li.original {
+  font-size:4em;
+}
+
+img {
+  display:block;
+  margin-bottom:2em;
+}
+
+form input, form button {
+  font-size:1.6em;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#url {
+  width:500px;
+  padding:2px;
+  margin-right:0.2em;
+}
+
+#submit {
+  padding:4px 8px;
+  font-size:1.4em;
+}

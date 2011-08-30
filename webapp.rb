@@ -1,5 +1,13 @@
+require 'base64'
+require 'cgi'
+
 class BBCQRCode < Sinatra::Base
   set :run, false
+  set :static, true
+  set :public, 'public'
+  set :root, File.dirname(__FILE__)
+
+  set :environment, :production
 
   # expects bitly credentials to live in ~/.bitlyrc
   BITLY = YAML::load(File.read(File.expand_path('~')+'/.bitlyrc'))
@@ -46,22 +54,64 @@ class BBCQRCode < Sinatra::Base
       bitly = Bitly.new(BITLY[:username], BITLY[:api_key])
       bitly.shorten(url).short_url
     end
-  end
 
-  get '/:width' do
-    content_type 'image/png'
-
-    unless shorten(params[:url]).match(/http:\/\/bbc\.in/)
-      halt 400, {'Content-Type' => 'text/plain'}, 'Oops! I will only encode BBC urls'
+    def is_bbc?(url)
+      # doesn't match bbc subdomains
+      url.match(/https?:\/\/([-\w\.]+)?(bbc\.co\.uk|bbc\.in)/)
     end
 
-    img = Magick::Image.new(39,39)
-    build_qrcode(url).draw(img)
-    build_bbc_logo.draw(img)
-    size = params[:width].to_i
-    img.resize(size,size,Magick::PointFilter).to_blob { 
-      self.format = 'PNG'
-    } 
+    def to_qrcode_blob(code,size=400)
+      img = Magick::Image.new(39,39)
+      build_qrcode('http://bbc.in/'+code).draw(img)
+      build_bbc_logo.draw(img)
+      blob = img.resize(size,size,Magick::PointFilter).to_blob { 
+        self.format = 'PNG'
+      } 
+      blob
+    end
+
+    def to_qrcode_base64(blob)
+      "data:image/png;base64,#{Base64.encode64(blob)}"
+    end
+
+    def to_qrcode(code)
+      "/qrcode/400/#{code}.png"
+    end
+  end
+
+  before do
+    response["Cache-Control"] = "max-age=31556926, public"
+  end
+
+  get '/' do
+    erb :index
+  end
+
+  post '/generate' do
+    destination = '/'
+    if is_bbc?(params[:url])
+      destination = "/qrcodes/#{Base64.urlsafe_encode64(params[:url])}"
+    end
+
+    redirect to destination
+  end
+
+  get '/qrcodes/*' do
+    url = Base64.urlsafe_decode64(params[:splat].first)
+    redirect to('/') unless is_bbc?(url)
+    
+    short = shorten(url)
+    code = short.split('/').last
+    @qrcode = {
+      :original_url => url,
+      :short_url => short, 
+      :code => code,
+      :blob => to_qrcode_blob(code)
+    }
+    erb :qrcodes
+  end
+
+  get '/about' do
+    erb :about
   end
 end
-

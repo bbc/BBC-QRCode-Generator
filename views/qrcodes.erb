@@ -1,0 +1,8 @@
+<div id="qrcode">
+  <ul>
+    <li class="original">url: <a href="<%= @qrcode[:original_url] %>"><%= @qrcode[:original_url] %></a></li>
+    <li>When reading the QRCode image below you should see <a href="<%= @qrcode[:short_url]%>"><%= @qrcode[:short_url] %></a></li>
+  </ul>
+  <img title="represents: <%= @qrcode[:short_url] %>" src="<%= to_qrcode_base64(@qrcode[:blob]) %>" />
+  <p><a href="/">...Let me create another</a></p>
+</div>
