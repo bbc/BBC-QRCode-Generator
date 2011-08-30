@@ -7,7 +7,7 @@ class BBCQRCode < Sinatra::Base
   set :public, 'public'
   set :root, File.dirname(__FILE__)
 
-  set :environment, :production
+  #set :environment, :production
 
   # expects bitly credentials to live in ~/.bitlyrc
   BITLY = YAML::load(File.read(File.expand_path('~')+'/.bitlyrc'))
@@ -60,7 +60,8 @@ class BBCQRCode < Sinatra::Base
       url.match(/https?:\/\/([-\w\.]+)?(bbc\.co\.uk|bbc\.in)/)
     end
 
-    def to_qrcode_blob(code,size=400)
+    def to_qrcode_blob(code,size)
+      size = (size > 800 || size < 39) ? size = 400 : size
       img = Magick::Image.new(39,39)
       build_qrcode('http://bbc.in/'+code).draw(img)
       build_bbc_logo.draw(img)
@@ -96,17 +97,18 @@ class BBCQRCode < Sinatra::Base
     redirect to destination
   end
 
-  get '/qrcodes/*' do
+  get '/qrcodes/:size/*' do
     url = Base64.urlsafe_decode64(params[:splat].first)
     redirect to('/') unless is_bbc?(url)
     
     short = shorten(url)
     code = short.split('/').last
+    size = params[:size] ? params[:size].to_i : 0
     @qrcode = {
       :original_url => url,
       :short_url => short, 
       :code => code,
-      :blob => to_qrcode_blob(code)
+      :blob => to_qrcode_blob(code, size)
     }
     erb :qrcodes
   end

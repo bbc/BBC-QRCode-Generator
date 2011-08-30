@@ -1,6 +1,8 @@
 <h1><a href="/">QRCode Generator</a></h1>
-<p>Please enter your BBC url below, to have it generated into a BBC QRCode.</p>
+<p>This web application lets you create QRCodes that represent BBC urls. It will shorten the url to a shorter bbc.in url and will also embed the BBC logo into the QRCode. This code can then be downloaded and used in the field.</p> 
+
 <form id="generate" action="/generate" method="post">
+  <legend>Please enter your BBC url below, to have it generated into a BBC QRCode.</legend>
   <input id='url' name='url' type='text' placeholder="Enter your bbc url here" required autofocus>
   <button id="submit" type='submit'>Generate</button>
 </form>

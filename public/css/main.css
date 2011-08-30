@@ -1,15 +1,22 @@
 body {
-  font:70% 'Helvetica'; 
+  font:70% 'Droid Serif', serif; 
   padding:20px;
 }
 
 h1 {
-  font-size:2.8em;
+  font-size:3.2em;
   margin-bottom:0.4em;
 }
 
 p {
+  width:80%;
   font-size:1.4em;
+  margin-bottom:1em;
+  line-height:1.5em;
+}
+
+legend {
+  font-size:1.2em;
   margin-bottom:0.4em;
 }
 
@@ -38,6 +45,28 @@ form input, form button {
   -webkit-border-radius: 5px;
   -khtml-border-radius: 5px;
   border-radius: 5px;
+}
+
+a {
+  text-decoration: none;
+  color: #06C;
+  background-color: rgba(255,246,224,0.0);  
+  -o-transition-property: color;
+  -webkit-transition-property: color;
+  -moz-transition-property: color;
+  transition-property: color;
+  -o-transition-duration: 0.4s;
+  -webkit-transition-duration: 0.4s;
+  -moz-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+a:hover,
+a:focus {
+  color: #313192;
+}
+a:visited {
+  background: none;
+  font-weight: normal;
 }
 
 #url {
