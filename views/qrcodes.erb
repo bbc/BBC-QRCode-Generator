@@ -1,6 +1,6 @@
 <div id="qrcode">
   <h1>url: <a href="<%= @qrcode[:original_url] %>"><%= @qrcode[:original_url] %></a></h1>
-  <p>This QRCode represents the shortened version: <a href="<%= @qrcode[:short_url]%>"><%= @qrcode[:short_url] %></a>. You can download this image by right-clicking on it and choosing "save".</p>
+  <p>This QRCode represents the shortened version: <a href="<%= @qrcode[:short_url]%>"><%= @qrcode[:short_url] %></a>. <br />Download this image by right-clicking on it and choosing "save".</p>
   <img title="represents: <%= @qrcode[:short_url] %>" src="<%= to_qrcode_base64(@qrcode[:blob]) %>" />
   <p><a href="/">...Let me create another</a></p>
 </div>

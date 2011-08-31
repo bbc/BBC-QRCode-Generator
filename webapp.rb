@@ -7,8 +7,6 @@ class BBCQRCode < Sinatra::Base
   set :public, 'public'
   set :root, File.dirname(__FILE__)
 
-  set :environment, :production
-
   # expects bitly credentials to live in ~/.bitlyrc
   BITLY = YAML::load(File.read(File.expand_path('~')+'/.bitlyrc'))
   BBC_LOGO = [
@@ -112,9 +110,5 @@ class BBCQRCode < Sinatra::Base
       :blob => to_qrcode_blob(code, size)
     }
     erb :qrcodes
-  end
-
-  get '/about' do
-    erb :about
   end
 end

@@ -1,8 +1,17 @@
-<h1><a href="/">QRCode Generator</a></h1>
-<p>This web application lets you create QRCodes that represent BBC urls. It will shorten the url to a shorter bbc.in url and will also embed the BBC logo into the QRCode. This code can then be downloaded and used in the field.</p> 
+<div id="header">
+  <h1><a href="/">BBC QRCode Generator</a></h1>
+  <p>This web application lets you create QRCodes that represent BBC urls. It will shorten the url to the shorter <a href="http://bbc.in">bbc.in</a> version and will also embed the BBC logo. You can see an example at the bottom of the page.</p> 
+</div>
 
 <form id="generate" action="/generate" method="post">
-  <legend>Please enter your BBC url below, to have it generated into a BBC QRCode.</legend>
+  <legend>Enter your BBC url below, and then press <em>generate</em>.</legend>
   <input id='url' name='url' type='text' placeholder="Enter your bbc url here" required autofocus>
   <button id="submit" type='submit'>Generate</button>
 </form>
+
+<div id="about">
+  <a href="/qrcodes/400/aHR0cDovL2JiYy5jby51aw=="><img src="/images/bbc.png" title="This QRCode represents the BBC homepage" /></a>
+  <h3>What is this?</h3>
+  <p>This is an 150 x 150 pixels example of <a href="/qrcodes/400/aHR0cDovL2JiYy5jby51aw==">a BBC QRCode</a>. If you have a suitable QRCode reader, you will see it represents the BBC Homepage. Find out <a href="http://en.wikipedia.org/wiki/QR_code">more about QRCodes</a> and their uses?</p>
+</div>
+

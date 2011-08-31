@@ -1,16 +1,16 @@
 body {
-  font:70% 'Droid Serif', serif; 
-  padding:20px;
+  font:70% 'Lato', sans-serif; 
+  padding:40px 20px;
 }
 
 h1 {
-  font-size:3.2em;
+  font-size:3.6em;
   margin-bottom:0.4em;
 }
 
 p {
   width:80%;
-  font-size:1.4em;
+  font-size:1.8em;
   margin-bottom:1em;
   line-height:1.5em;
 }
@@ -39,8 +39,12 @@ img {
   margin-bottom:2em;
 }
 
+form {
+  margin-bottom:4em;
+}
+
 form input, form button {
-  font-size:1.6em;
+  font-size:2.2em;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   -khtml-border-radius: 5px;
@@ -69,13 +73,43 @@ a:visited {
   font-weight: normal;
 }
 
+em {
+  font-style:italic;
+}
+
 #url {
-  width:500px;
-  padding:2px;
+  width:70%;
+  padding:5px;
   margin-right:0.2em;
 }
 
 #submit {
-  padding:4px 8px;
-  font-size:1.4em;
+  padding:8px 8px;
+  font-size:1.8em;
+}
+
+#content {
+  margin-left: auto;
+  margin-right: auto;
+  width: 78em;
+  text-align: left;
+}
+
+#about p {
+  font-size:1.3em;
+}
+
+#about h3 {
+  font-size:2em;
+}
+
+#about img {
+  float:left;
+  margin-right:1em;
+  margin-bottom:3em;
+}
+
+#footer {
+  font-size:0.8em;
+  clear:left;
 }
