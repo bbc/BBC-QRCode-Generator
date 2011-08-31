@@ -77,6 +77,11 @@ em {
   font-style:italic;
 }
 
+#menu {
+  margin:0;
+  font-size:1.4em;
+}
+
 #url {
   width:70%;
   padding:5px;
@@ -95,18 +100,32 @@ em {
   text-align: left;
 }
 
-#about p {
+#about p,
+#qrcode p {
   font-size:1.3em;
 }
 
-#about h3 {
+#about h3,
+#qrcode h3 {
+  padding-top:0.1em;
   font-size:2em;
 }
 
-#about img {
+#qrcode h3 {
+  font-size:1.8em;
+  padding-top:0.3em;
+}
+
+#about img,
+#qrcode img {
   float:left;
   margin-right:1em;
   margin-bottom:3em;
+}
+
+#qrcode .info {
+  float:left;
+  width:50%;
 }
 
 #footer {

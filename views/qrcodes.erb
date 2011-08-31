@@ -1,6 +1,14 @@
+<p id="menu"><a href="/">Homepage</a></p>
+<h1>url: <a href="<%= @qrcode[:original_url] %>"><%= @qrcode[:original_url] %></a></h1>
+<p>This QRCode represents <a href="<%= @qrcode[:short_url]%>"><%= @qrcode[:short_url] %></a>. The QRCode is an image, and can be downloaded in the traditional 'right-click' and save way.</p>
 <div id="qrcode">
-  <h1>url: <a href="<%= @qrcode[:original_url] %>"><%= @qrcode[:original_url] %></a></h1>
-  <p>This QRCode represents the shortened version: <a href="<%= @qrcode[:short_url]%>"><%= @qrcode[:short_url] %></a>. <br />Download this image by right-clicking on it and choosing "save".</p>
   <img title="represents: <%= @qrcode[:short_url] %>" src="<%= to_qrcode_base64(@qrcode[:blob]) %>" />
-  <p><a href="/">...Let me create another</a></p>
+  <div class="info">
+  <h3>More Information</h3>
+  <p>You can genrate other sizes if you wish. You just need to replace the 400 in the url to the size in pixels you would like. Some examples below.</p>
+  <ul>
+  <li><a href="<%= qrcode_url(@qrcode[:slug],800) %>">800px wide</a></li>
+  <li><a href="<%= qrcode_url(@qrcode[:slug],200) %>">200px wide</a></li>
+  </ul>
+  </div>
 </div>

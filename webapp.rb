@@ -75,6 +75,10 @@ class BBCQRCode < Sinatra::Base
     def to_qrcode_base64(blob)
       "data:image/png;base64,#{Base64.encode64(blob)}"
     end
+
+    def qrcode_url(slug,size=DEFAULT_SIZE)
+      "/qrcodes/#{size}/#{slug}"
+    end
   end
 
   before do
@@ -95,7 +99,8 @@ class BBCQRCode < Sinatra::Base
   end
 
   get '/qrcodes/:size/*' do
-    url = Base64.urlsafe_decode64(params[:splat].first)
+    slug = params[:splat].first
+    url = Base64.urlsafe_decode64(slug)
     redirect to('/') unless is_bbc?(url)
     
     short = shorten(url)
@@ -107,6 +112,7 @@ class BBCQRCode < Sinatra::Base
       :original_url => url,
       :short_url => short, 
       :code => code,
+      :slug => slug,
       :blob => to_qrcode_blob(code, size)
     }
     erb :qrcodes
