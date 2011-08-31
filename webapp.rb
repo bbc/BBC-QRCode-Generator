@@ -54,6 +54,8 @@ class BBCQRCode < Sinatra::Base
       Bitly.use_api_version_3
       bitly = Bitly.new(BITLY[:username], BITLY[:api_key])
       bitly.shorten(url).short_url
+    rescue SocketError
+      nil
     end
 
     def is_bbc?(url)
@@ -99,6 +101,8 @@ class BBCQRCode < Sinatra::Base
     redirect to('/') unless is_bbc?(url)
     
     short = shorten(url)
+    halt 404, "Error! I can't connect to bit.ly" unless short
+
     code = short.split('/').last
     size = params[:size] ? params[:size].to_i : 0
     @qrcode = {
