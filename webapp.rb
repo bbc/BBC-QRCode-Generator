@@ -1,6 +1,6 @@
 require 'base64'
 require 'cgi'
-require 'rmagick'
+require 'RMagick'
 
 class BBCQRCode < Sinatra::Base
   set :run, false
