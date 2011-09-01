@@ -58,7 +58,7 @@ class BBCQRCode < Sinatra::Base
 
     def is_bbc?(url)
       # doesn't match bbc subdomains
-      url.match(/https?:\/\/([-\w\.]+)?(bbc\.co\.uk|bbc\.in)/)
+      url.match(/^https?:\/\/([-\w\.]+)?(bbc\.co\.uk|bbc\.in)/)
     end
 
     def to_qrcode_blob(code,size)
