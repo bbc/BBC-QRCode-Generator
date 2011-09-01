@@ -1,6 +1,5 @@
 require 'base64'
 require 'cgi'
-require 'RMagick'
 
 class BBCQRCode < Sinatra::Base
   set :run, false
@@ -91,21 +90,25 @@ class BBCQRCode < Sinatra::Base
   end
 
   post '/generate' do
-    destination = '/'
-    if is_bbc?(params[:url])
-      destination = "/qrcodes/#{DEFAULT_SIZE}/#{Base64.urlsafe_encode64(params[:url])}"
-    end
+    halt 400, 
+      "Invalid! You can only encode BBC urls. Go back and try again." unless is_bbc?(params[:url])
 
+    destination = "/qrcodes/#{DEFAULT_SIZE}/#{Base64.urlsafe_encode64(params[:url])}"
     redirect to destination
   end
 
   get '/qrcodes/:size/*' do
-    slug = params[:splat].first
-    url = Base64.urlsafe_decode64(slug)
-    redirect to('/') unless is_bbc?(url)
+    begin
+      slug = params[:splat].first
+      url = Base64.urlsafe_decode64(slug)
+    rescue ArgumentError
+      return redirect to '/'
+    end
+
+    halt 400, "Invalid! You can only encode BBC urls. Go back and try again." unless is_bbc?(url)
     
     short = shorten(url)
-    halt 404, "Error! I can't connect to bit.ly" unless short
+    halt 400, "Error! I can't connect to bit.ly" unless short
 
     code = short.split('/').last
     size = params[:size] ? params[:size].to_i : 0
