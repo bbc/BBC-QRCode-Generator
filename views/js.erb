@@ -1,0 +1,17 @@
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $('#generate').submit(function() {
+      $('#url').click(function() { $('.error').remove() });
+
+      var is_bbc = /^https?:\/\/([-\w\.]+)?(bbc\.co\.uk|bbc\.in)/i;
+      if ( !is_bbc.test($('#url').val()) ) {
+        $('.error').remove();
+        $(this).append('<small class="error" style="display:block;color:red;">Invalid Url!</small>');
+        return false;
+      }
+      
+      return true;
+    });
+  });
+</script>

@@ -86,6 +86,7 @@ class BBCQRCode < Sinatra::Base
   end
 
   get '/' do
+    @validate = true
     erb :index
   end
 
