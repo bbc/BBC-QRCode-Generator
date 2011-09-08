@@ -129,5 +129,6 @@ em {
 }
 
 #footer {
+  clear:left;
   font-size:0.6em;
 }

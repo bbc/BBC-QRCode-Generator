@@ -81,12 +81,8 @@ class BBCQRCode < Sinatra::Base
     end
   end
 
-  before do
-    # year: 31556926
-    expires 86400, :public, :must_revalidate
-  end
-
   get '/' do
+    expires 86400, :public, :must_revalidate
     @validate = true
     erb :index
   end
@@ -100,6 +96,8 @@ class BBCQRCode < Sinatra::Base
   end
 
   get '/qrcodes/:size/*' do
+    expires 31556926, :public, :must_revalidate
+
     begin
       slug = params[:splat].first
       url = Base64.urlsafe_decode64(slug)
@@ -107,6 +105,8 @@ class BBCQRCode < Sinatra::Base
       return redirect to '/'
     end
 
+    etag Base64.strict_encode64(url) 
+    
     halt 400, "Invalid! You can only encode BBC urls. Go back and try again." unless is_bbc?(url)
     
     short = shorten(url)
