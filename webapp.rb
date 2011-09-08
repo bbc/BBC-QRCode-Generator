@@ -49,7 +49,7 @@ class BBCQRCode < Sinatra::Base
     end
 
     def shorten(url)
-      return nil unless is_bbc_in?(url) 
+      return url if is_bbc_in?(url) 
       Bitly.use_api_version_3
       bitly = Bitly.new(BITLY[:username], BITLY[:api_key])
       bitly.shorten(url).short_url
@@ -60,6 +60,7 @@ class BBCQRCode < Sinatra::Base
     end
 
     def is_bbc?(url)
+      url = url.strip
       url.match(/^https?:\/\/([-\w\.]+)?(bbc\.co\.uk|bbc\.in)/)
     end
 
