@@ -82,7 +82,8 @@ class BBCQRCode < Sinatra::Base
   end
 
   before do
-    response["Cache-Control"] = "max-age=31556926, public"
+    # year: 31556926
+    expires 86400, :public, :must_revalidate
   end
 
   get '/' do
