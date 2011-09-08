@@ -49,16 +49,22 @@ class BBCQRCode < Sinatra::Base
     end
 
     def shorten(url)
+      return nil unless is_bbc_in?(url) 
       Bitly.use_api_version_3
       bitly = Bitly.new(BITLY[:username], BITLY[:api_key])
       bitly.shorten(url).short_url
+    rescue BitlyError
+      nil 
     rescue SocketError
       nil
     end
 
     def is_bbc?(url)
-      # doesn't match bbc subdomains
       url.match(/^https?:\/\/([-\w\.]+)?(bbc\.co\.uk|bbc\.in)/)
+    end
+
+    def is_bbc_in?(url)
+      url.match(/^https?:\/\/bbc\.in/)
     end
 
     def to_qrcode_blob(code,size)
@@ -110,7 +116,7 @@ class BBCQRCode < Sinatra::Base
     halt 400, "Invalid! You can only encode BBC urls. Go back and try again." unless is_bbc?(url)
     
     short = shorten(url)
-    halt 400, "Error! I can't connect to bit.ly" unless short
+    halt 400, "Error! There's a problem with bit.ly" unless short
 
     code = short.split('/').last
     size = params[:size] ? params[:size].to_i : 0
