@@ -118,6 +118,7 @@ class BBCQRCode < Sinatra::Base
     
     short = shorten(url)
     halt 400, "Error! There's a problem with bit.ly" unless short
+    halt 400, "Invalid! A bbc.in url could not be genarated for that url!" if !is_bbc_in?(short)
 
     code = short.split('/').last
     size = params[:size] ? params[:size].to_i : 0
