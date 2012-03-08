@@ -65,7 +65,7 @@ class BBCQRCode < Sinatra::Base
     end
 
     def is_bbc_in?(url)
-      url.match(/^https?:\/\/bbc\.in/)
+      url.match(/^https?:\/\/bbc\.in\//)
     end
 
     def to_qrcode_blob(code,size)
