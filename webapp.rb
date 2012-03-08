@@ -13,15 +13,15 @@ class BBCQRCode < Sinatra::Base
     ['w',  7, 15, 31, 23], ['b',  8, 16, 14, 22],
     ['b', 16, 16, 22, 22], ['b', 24, 16, 30, 22],
     ['w', 10, 17, 12, 21], ['w', 18, 17, 20, 21],
-    ['b', 12, 17], ['b', 11, 18], ['b', 12, 19], 
+    ['b', 12, 17], ['b', 11, 18], ['b', 12, 19],
     ['b', 11, 20], ['b', 12, 21], ['b', 20, 17],
-    ['b', 19, 18], ['b', 20, 19], ['b', 19, 20], 
-    ['b', 20, 21], ['w', 27, 17, 28, 17], 
+    ['b', 19, 18], ['b', 20, 19], ['b', 19, 20],
+    ['b', 20, 21], ['w', 27, 17, 28, 17],
     ['w', 26, 18, 26, 20], ['w', 27, 21, 28, 21]
   ]
   DEFAULT_SIZE=400
 
-  helpers do 
+  helpers do
     def build_bbc_logo
       logo = Magick::Draw.new
       BBC_LOGO.each do |i|
@@ -33,7 +33,7 @@ class BBCQRCode < Sinatra::Base
           logo.rectangle(i[1],i[2],i[3],i[4])
         end
       end
-      logo 
+      logo
     end
 
     def build_qrcode(url, border=1)
@@ -49,12 +49,12 @@ class BBCQRCode < Sinatra::Base
     end
 
     def shorten(url)
-      return url if is_bbc_in?(url) 
+      return url if is_bbc_in?(url)
       Bitly.use_api_version_3
       bitly = Bitly.new(BITLY[:username], BITLY[:api_key])
       bitly.shorten(url).short_url
     rescue BitlyError
-      nil 
+      nil
     rescue SocketError
       nil
     end
@@ -73,9 +73,9 @@ class BBCQRCode < Sinatra::Base
       img = Magick::Image.new(39,39)
       build_qrcode('http://bbc.in/'+code).draw(img)
       build_bbc_logo.draw(img)
-      blob = img.resize(size,size,Magick::PointFilter).to_blob { 
+      blob = img.resize(size,size,Magick::PointFilter).to_blob {
         self.format = 'PNG'
-      } 
+      }
       blob
     end
 
@@ -95,7 +95,7 @@ class BBCQRCode < Sinatra::Base
   end
 
   post '/generate' do
-    halt 400, 
+    halt 400,
       "Invalid! You can only encode BBC urls. Go back and try again." unless is_bbc?(params[:url])
 
     destination = "/qrcodes/#{DEFAULT_SIZE}/#{Base64.urlsafe_encode64(params[:url])}"
@@ -112,19 +112,19 @@ class BBCQRCode < Sinatra::Base
       return redirect to '/'
     end
 
-    etag Base64.strict_encode64(url) 
-    
+    etag Base64.strict_encode64(url)
+
     halt 400, "Invalid! You can only encode BBC urls. Go back and try again." unless is_bbc?(url)
-    
+
     short = shorten(url)
-    halt 400, "Error! There's a problem with bit.ly" unless short
-    halt 400, "Invalid! A bbc.in url could not be genarated for that url!" if !is_bbc_in?(short)
+    halt 400, "Error! There's was a problem shortening that url with bit.ly" unless short
+    halt 400, "Invalid! A bbc.in url could not be generated for that url!" if !is_bbc_in?(short)
 
     code = short.split('/').last
     size = params[:size] ? params[:size].to_i : 0
     @qrcode = {
       :original_url => url,
-      :short_url => short, 
+      :short_url => short,
       :code => code,
       :slug => slug,
       :blob => to_qrcode_blob(code, size)
