@@ -19,7 +19,7 @@ class BBCQRCode < Sinatra::Base
     ['b', 20, 21], ['w', 27, 17, 28, 17],
     ['w', 26, 18, 26, 20], ['w', 27, 21, 28, 21]
   ]
-  DEFAULT_SIZE=400
+  DEFAULT_SIZE = 400
 
   helpers do
     def build_bbc_logo
@@ -92,6 +92,11 @@ class BBCQRCode < Sinatra::Base
     expires 86400, :public, :must_revalidate
     @validate = true
     erb :index
+  end
+
+  get '/tracking' do
+    expires 86400, :public, :must_revalidate
+    erb :tracking
   end
 
   post '/generate' do
