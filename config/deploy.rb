@@ -27,8 +27,15 @@ namespace :deploy do
     strategy.deploy!
     finalize_update
   end
+end
 
-  after("deploy") do
-    cleanup
+after :deploy, "deploy:cleanup"
+
+namespace :passenger do
+  desc "Restart Application"
+  task :restart do
+    run "touch #{current_path}/tmp/restart.txt"
   end
 end
+
+after :deploy, "passenger:restart"
