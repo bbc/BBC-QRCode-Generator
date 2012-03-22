@@ -1,9 +1,10 @@
 source "http://rubygems.org"
-gem 'sinatra'
-gem 'rack'
-gem 'rack-cache', :require => "rack/cache"
-gem 'rqrcode'
-gem 'rmagick', :require => 'RMagick'
-# uncomment if you need http_proxy until bitly is updated
-#gem 'bitly', :git => 'http://github.com/whomwah/bitly.git'
-gem 'bitly'
+
+gem "capistrano", "~> 2.11.2"
+gem "capistrano-ext", "~> 1.2.1"
+gem "sinatra", "~> 1.3.2"
+gem "rack-cache", "~> 1.2", :require => "rack/cache"
+gem "rqrcode", "~> 0.4.2"
+gem "rmagick", "~> 2.13.1", :require => 'RMagick'
+gem "bitly", "~> 0.7.0"
+gem "resque", "~> 1.20.0"
