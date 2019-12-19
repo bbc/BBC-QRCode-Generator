@@ -40,10 +40,10 @@ GEM
     oauth2 (0.5.2)
       faraday (~> 0.7)
       multi_json (~> 1.0)
-    rack (1.4.1)
+    rack (1.6.12)
     rack-cache (1.2)
       rack (>= 0.4)
-    rack-protection (1.2.0)
+    rack-protection (1.5.5)
       rack
     redis (2.2.2)
     redis-namespace (1.0.3)
