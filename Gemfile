@@ -7,4 +7,4 @@ gem "rack-cache", "~> 1.2", :require => "rack/cache"
 gem "rqrcode", "~> 0.4.2"
 gem "rmagick", "~> 2.13.1", :require => 'RMagick'
 gem "bitly", "~> 0.7.0"
-gem "resque", "~> 1.20.0"
+gem "resque", "~> 2.6.0"
